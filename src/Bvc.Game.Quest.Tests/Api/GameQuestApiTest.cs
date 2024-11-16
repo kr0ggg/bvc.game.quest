@@ -10,7 +10,7 @@ namespace Bvc.Game.Quest.Tests.Api;
 public class GameQuestApiTest : IDisposable
 {
     private readonly MockRepository mocks;
-    private Mock<IAchievementService> service;
+    private readonly Mock<IAchievementService> service;
     private readonly GameQuestApi api;
     
     public GameQuestApiTest()
@@ -18,7 +18,6 @@ public class GameQuestApiTest : IDisposable
         mocks = new MockRepository(MockBehavior.Strict);
         service = mocks.Create<IAchievementService>();
         api = new GameQuestApi(service.Object);
-
     }
 
     public void Dispose() 
@@ -29,7 +28,8 @@ public class GameQuestApiTest : IDisposable
     public void PostAchievement()
     {
         var requestDto = new PostAchievementRequest { GamerId = 0, AchievementId = 0 };
-        var returnedFromService = new AchievementDto { GamerId = requestDto.GamerId, Id = requestDto.GamerId };
+        var achievementDto = new AchievementDto { Id = requestDto.AchievementId, GamerId = requestDto.GamerId };
+        var returnedFromService = new GamerDto { Id = requestDto.GamerId, Achievement = achievementDto};
 
         service.Setup(x => x.PostAchievement(requestDto.GamerId, requestDto.AchievementId))
                .Returns(returnedFromService);
@@ -39,7 +39,7 @@ public class GameQuestApiTest : IDisposable
         Validate.Begin()
             .IsNotNull(response, nameof(response)).Check()
             .IsEqual(response.Id, requestDto.AchievementId, nameof(response.Id))
-            .IsEqual(response.GamerId, requestDto.GamerId, nameof(response.GamerId))
+            .IsEqual(response.Achievement, achievementDto, nameof(response.Achievement))
             .Check();
     }
 }

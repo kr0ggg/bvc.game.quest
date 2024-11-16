@@ -1,7 +1,6 @@
 namespace Bvc.Game.Quest.Services.Domain;
 
-public class Player
+public class Player : EntityBase
 {
-    public int Id { get; set; }
     public Achievement Achievement { get; set; }
 }

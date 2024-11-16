@@ -1,8 +1,8 @@
-using Bvc.Game.Quest.Services.Models.Response;
+using Bvc.Game.Quest.Services.Models;
 
 namespace Bvc.Game.Quest.Services.Services;
 
 public interface IAchievementService
 {
-    AchievementDto PostAchievement(int playerId, int achievementId);
+    GamerDto PostAchievement(int playerId, int achievementId);
 }

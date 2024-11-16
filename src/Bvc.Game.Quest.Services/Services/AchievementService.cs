@@ -1,15 +1,24 @@
-using Bvc.Game.Quest.Services.Models.Response;
+using Bvc.Game.Quest.Services.DbContext;
+using Bvc.Game.Quest.Services.Domain;
+using Bvc.Game.Quest.Services.Mappers;
+using Bvc.Game.Quest.Services.Models;
 
 namespace Bvc.Game.Quest.Services.Services;
 
 public class AchievementService : IAchievementService
 {
-    public AchievementDto PostAchievement(int playerid, int achievementId)
+    private readonly IDbContext dbContext;
+
+    public AchievementService(IDbContext dbContext)
     {
-        return new AchievementDto
-        {
-            Id = achievementId,
-            GamerId = playerid
-        };
+        this.dbContext = dbContext;
+    }
+
+    public GamerDto PostAchievement(int playerId, int achievementId)
+    {
+        var player = dbContext.Get<Player>(playerId);
+        var achievement = dbContext.Get<Achievement>(achievementId);
+        player.Achievement = achievement;
+        return player.ToModel();
     }
 }
