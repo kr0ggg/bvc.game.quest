@@ -1,5 +1,4 @@
-using Bvc.Game.Quest.Domain;
-using Bvc.Game.Quest.Services;
+using Bvc.Game.Quest.Services.Services;
 using Xerris.DotNet.Core.Validations;
 
 namespace Bvc.Game.Quest.Tests.Services;
@@ -16,23 +15,21 @@ public class AchievementServiceTests
     [Fact]
     public void PostAchievement()
     {
-        var player = new Player();
-        var gameId = 0;
+        var playerid = 0;
         var achievementId = 0;
 
-        var achievement = service.PostAchievement(player, gameId, achievementId);
+        var achievement = service.PostAchievement(playerid, achievementId);
 
         Validate.Begin()
-            .IsNotNull(achievement, nameof(Achievement)).Check()
-            .IsEqual(player.Achievement, achievement, nameof(player.Achievement))
-            .IsEqual(achievement.PlayerId, player.Id, nameof(achievement.PlayerId))
-            .IsEqual(achievement.GameId, gameId, nameof(achievement.GameId))
+            .IsNotNull(achievement, nameof(achievement)).Check()
+            .IsEqual(achievement.GamerId, playerid, nameof(achievement.GamerId))
+            .IsEqual(achievement.Id, achievementId, nameof(achievement.Id))
             .Check();
     }
 
-    [Fact]
+    [Fact(Skip = "student to build")]
     public void PostAchievement_MultipleForPlayer()
     {
-        //todo
+        throw new NotImplementedException();
     }
 }

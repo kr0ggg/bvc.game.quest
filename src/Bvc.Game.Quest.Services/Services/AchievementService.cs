@@ -1,18 +1,15 @@
-using Bvc.Game.Quest.Domain;
+using Bvc.Game.Quest.Services.Models.Response;
 
-namespace Bvc.Game.Quest.Services;
+namespace Bvc.Game.Quest.Services.Services;
 
-public class AchievementService
+public class AchievementService : IAchievementService
 {
-    public Achievement PostAchievement(Player player, int gameId, int achievementId)
+    public AchievementDto PostAchievement(int playerid, int achievementId)
     {
-        player.Achievement = new Achievement
+        return new AchievementDto
         {
-            PlayerId = player.Id,
-            GameId = gameId,
-            AchievementId = achievementId
+            Id = achievementId,
+            GamerId = playerid
         };
-        
-        return player.Achievement;
     }
 }

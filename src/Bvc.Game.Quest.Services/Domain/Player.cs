@@ -1,4 +1,4 @@
-namespace Bvc.Game.Quest.Domain;
+namespace Bvc.Game.Quest.Services.Domain;
 
 public class Player
 {
