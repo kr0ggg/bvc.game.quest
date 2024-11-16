@@ -7,17 +7,17 @@ using Xerris.DotNet.Core.Validations;
 
 namespace Bvc.Game.Quest.Tests.Api;
 
-public class GameQuestFacadeTest : IDisposable
+public class GameQuestApiTest : IDisposable
 {
     private readonly MockRepository mocks;
     private Mock<IAchievementService> service;
-    private readonly GameQuestFacade api;
+    private readonly GameQuestApi api;
     
-    public GameQuestFacadeTest()
+    public GameQuestApiTest()
     {
         mocks = new MockRepository(MockBehavior.Strict);
         service = mocks.Create<IAchievementService>();
-        api = new GameQuestFacade(service.Object);
+        api = new GameQuestApi(service.Object);
 
     }
 

@@ -6,11 +6,11 @@ using Xerris.DotNet.Core.Validations;
 
 namespace Bvc.Game.Quest.Services.Api;
 
-public class GameQuestFacade
+public class GameQuestApi
 {
     private readonly IAchievementService serviceObject;
 
-    public GameQuestFacade(IAchievementService serviceObject)
+    public GameQuestApi(IAchievementService serviceObject)
     {
         this.serviceObject = serviceObject;
     }
