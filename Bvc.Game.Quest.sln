@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bvc.Game.Quest.Services", "src\Bvc.Game.Quest.Services\Bvc.Game.Quest.Services.csproj", "{92FF7C8A-C010-48C1-8A72-580937936D1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bvc.Game.Quest.Tests", "src\Bvc.Game.Quest.Tests\Bvc.Game.Quest.Tests.csproj", "{8E8F6B36-C475-4FC9-9EFE-C849161247AB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{92FF7C8A-C010-48C1-8A72-580937936D1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92FF7C8A-C010-48C1-8A72-580937936D1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92FF7C8A-C010-48C1-8A72-580937936D1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92FF7C8A-C010-48C1-8A72-580937936D1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E8F6B36-C475-4FC9-9EFE-C849161247AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E8F6B36-C475-4FC9-9EFE-C849161247AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E8F6B36-C475-4FC9-9EFE-C849161247AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E8F6B36-C475-4FC9-9EFE-C849161247AB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
