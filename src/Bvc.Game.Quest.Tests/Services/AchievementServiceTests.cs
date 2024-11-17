@@ -1,11 +1,8 @@
 using Bvc.Game.Quest.Services.DbContext;
 using Bvc.Game.Quest.Services.Domain;
-using Bvc.Game.Quest.Services.Mappers;
 using Bvc.Game.Quest.Services.Models.Response;
 using Bvc.Game.Quest.Services.Services;
-using Bvc.Game.Quest.Tests.AssertionExtensions;
 using Moq;
-using Xerris.DotNet.Core.Validations;
 
 namespace Bvc.Game.Quest.Tests.Services;
 
@@ -51,8 +48,7 @@ public class AchievementServiceTests : IDisposable
     public void PostAnotherAchievement()
     {
         var highScore = new Achievement { Id = 4 , Name = "HighScore"};
-        var player = new Player { Id = 2 , Name = "Elvis"};
-        player.Add(highScore);
+        var player = CreatePlayerWithOneAchievement(highScore);
         
         var personalBest = new Achievement { Id = 2 , Name = "Personal Best"};
 
@@ -76,4 +72,7 @@ public class AchievementServiceTests : IDisposable
         Assert.Equal(actualPb.Id, 2);
         Assert.Equal(actualPb.Name, personalBest.Name);
     }
+
+    private static Player CreatePlayerWithOneAchievement(Achievement added)
+        => new Player { Id = 2, Name = "Elvis" }.Add(added);
 }

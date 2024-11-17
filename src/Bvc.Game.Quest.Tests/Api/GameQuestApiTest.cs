@@ -27,12 +27,13 @@ public class GameQuestApiTest : IDisposable
     [Fact]
     public void PostAchievement()
     {
-        var requestDto = new PostAchievementRequest { GamerId = 0, AchievementId = 0 };
+        var requestDto = new PostAchievementRequest { GamerId = 1, AchievementId = 1 };
         
         var achievementDto = new AchievementDto
-        { Id = requestDto.AchievementId, Name = "HighScore" };
+            { Id = requestDto.AchievementId, Name = "HighScore" };
         
-        var returnedFromService = new GamerDto { Id = requestDto.GamerId, 
+        var returnedFromService = new GamerDto { 
+            Id = requestDto.GamerId, 
             Name = "Kr0ggg",
             Achievements = [achievementDto]
         };
