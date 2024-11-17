@@ -8,7 +8,7 @@ using Xerris.DotNet.Core.Validations;
 
 namespace Bvc.Game.Quest.Tests.Services;
 
-public class AchievementServiceTests
+public class AchievementServiceTests : IDisposable
 {
     private readonly MockRepository mocks;
     private readonly Mock<IDbContext> dbContext;
@@ -20,6 +20,8 @@ public class AchievementServiceTests
         dbContext = mocks.Create<IDbContext>();
         service = new AchievementService(dbContext.Object);
     }
+
+    public void Dispose() => mocks.VerifyAll();
 
     [Fact]
     public void PostAchievement()
@@ -38,10 +40,16 @@ public class AchievementServiceTests
             .AchievementEquals(playerDto.Achievement, achievement.ToModel())
             .Check();
     }
+   
 
-    [Fact(Skip = "student to build")]
-    public void PostAchievement_MultipleForPlayer()
+    [Fact]
+    public void PostAnotherAchievement()
     {
-        throw new NotImplementedException();
+        //Arrange - create a Player who already has one achievement.
+        //Act - call the Api - PostAchievement: same gamerId,  another AchievementId
+        //Assert
+        //  make sure the "GamerDto" has both achievements
+        
+        // you will need to use Moq in order to "Setup" the call to the AchievementService.
     }
 }

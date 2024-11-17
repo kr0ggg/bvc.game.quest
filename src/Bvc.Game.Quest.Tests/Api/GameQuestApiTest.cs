@@ -42,4 +42,15 @@ public class GameQuestApiTest : IDisposable
             .IsEqual(response.Achievement, achievementDto, nameof(response.Achievement))
             .Check();
     }
+
+    [Fact]
+    public void PostAnotherAchievement()
+    {
+        //Arrange - create a Player who already has one achievement.
+        //Act - call the Api - PostAchievement: same gamerId,  another AchievementId
+        //Assert
+        //  make sure the "GamerDto" has both achievements
+        
+        // you will need to use Moq in order to "Setup" the call to the AchievementService.
+    }
 }
