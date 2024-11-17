@@ -9,18 +9,8 @@ public class DomainMapperTest
     [Fact]
     public void Player_Model()
     {
-        //Arrange
-        var achievement = new Achievement
-        {
-            Id = 1,
-            PlayerId = 2,
-        };
-        var player = new Player
-         {
-             Id = 2,
-             Achievement = achievement
-         };
-        
+        var achievement = new Achievement { Id = 1, PlayerId = 2 };
+        var player = new Player { Id = 2, Achievement = achievement };
         var playerDto = player.ToModel(player);
         
         
