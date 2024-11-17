@@ -53,7 +53,8 @@ public class GameQuestApiTest : IDisposable
         
         var achievementDto = new AchievementDto { Id = requestDto.AchievementId, GamerId = requestDto.GamerId };
         var achievementDto1 = new AchievementDto { Id = requestDto1.AchievementId, GamerId = requestDto1.GamerId };
-        var returnedFromService = new GamerDto { Id = requestDto.GamerId, Achievement = achievementDto};
+        var listOfAchievements = new List<AchievementDto> { achievementDto, achievementDto1 };
+        var returnedFromService = new GamerDto { Id = requestDto.GamerId, Achievement = listOfAchievements};
 
         service.Setup(x => x.PostAchievement(requestDto.GamerId, requestDto.AchievementId))
             .Returns(returnedFromService);
@@ -65,6 +66,7 @@ public class GameQuestApiTest : IDisposable
             .IsEqual(response.Id, requestDto.AchievementId, nameof(response.Id))
             .IsEqual(response.Achievement, achievementDto, nameof(response.Achievement))
             .Check();
+        Assert.True(response.Achievement.Count()>2);
         //Assert
         //  make sure the "GamerDto" has both achievements
         

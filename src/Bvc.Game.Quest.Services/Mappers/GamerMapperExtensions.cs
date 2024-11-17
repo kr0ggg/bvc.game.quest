@@ -10,7 +10,7 @@ public static class GamerMapperExtensions
         => new()
         {
             Id = player.Id,
-            Achievement = player.Achievement.ToModel()
+            Achievement = player.Achievement?.ToModel()
         };
 
     public static AchievementDto ToModel(this Achievement achievement) =>
