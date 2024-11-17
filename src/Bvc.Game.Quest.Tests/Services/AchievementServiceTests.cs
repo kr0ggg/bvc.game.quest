@@ -1,10 +1,8 @@
 using Bvc.Game.Quest.Services.DbContext;
 using Bvc.Game.Quest.Services.Domain;
-using Bvc.Game.Quest.Services.Mappers;
+using Bvc.Game.Quest.Services.Models.Response;
 using Bvc.Game.Quest.Services.Services;
-using Bvc.Game.Quest.Tests.AssertionExtensions;
 using Moq;
-using Xerris.DotNet.Core.Validations;
 
 namespace Bvc.Game.Quest.Tests.Services;
 
@@ -26,36 +24,55 @@ public class AchievementServiceTests : IDisposable
     [Fact]
     public void PostAchievement()
     {
-        var player = new Player { Id = 2 };
         var achievement = new Achievement { Id = 4 };
+        var expected = new AchievementDto { Id = 1, Name = achievement.Name };
+        var player = new Player { Id = 2};
 
         dbContext.Setup(x => x.Get<Player>(player.Id)).Returns(player);
         dbContext.Setup(x => x.Get<Achievement>(achievement.Id)).Returns(achievement);
         
         var playerDto = service.PostAchievement(player.Id, achievement.Id);
 
-        Validate.Begin()
-            .IsNotNull(playerDto, nameof(playerDto)).Check()
-            .GamerEquals(playerDto, player.ToModel())
-            .AchievementEquals(playerDto.Achievement, achievement.ToModel())
-            .Check();
+        Assert.NotNull(playerDto);
+        Assert.Equal(player.Id, playerDto.Id);
+        Assert.Equal(player.Name, playerDto.Name);
+        Assert.NotEmpty(playerDto.Achievements);
+        Assert.Equal(1, playerDto.Achievements.Count);
+
+        var actual = playerDto.Achievements.First();
+        Assert.Equal(expected.Id, actual.Id);
+        Assert.Equal(expected.Name, actual.Name);
     }
 
     [Fact]
     public void PostAnotherAchievement()
     {
-        var player = new Player{ Id = 2 , Achievement = new Achievement{ Id = 4 } };
-        var achievement = new Achievement { Id = 101 };
+        var highScore = new Achievement { Id = 4 , Name = "HighScore"};
+        var player = CreatePlayerWithOneAchievement(highScore);
+        
+        var personalBest = new Achievement { Id = 2 , Name = "Personal Best"};
 
         dbContext.Setup(x => x.Get<Player>(player.Id)).Returns(player);
-        dbContext.Setup(x => x.Get<Achievement>(achievement.Id)).Returns(achievement);
-        
-        var playerDto1 = service.PostAchievement(player.Id, achievement.Id);
+        dbContext.Setup(x => x.Get<Achievement>(personalBest.Id)).Returns(personalBest);
 
-        Validate.Begin()
-            .IsNotNull(playerDto1, nameof(playerDto1)).Check()
-            .GamerEquals(playerDto1, player.ToModel())
-            .AchievementEquals(playerDto1.Achievement, achievement.ToModel())
-            .Check();
+        var playerDto = service.PostAchievement(player.Id, personalBest.Id);
+        
+        Assert.NotNull(playerDto);
+        Assert.Equal(player.Id, playerDto.Id);
+        Assert.Equal(player.Name, playerDto.Name);
+        
+        Assert.NotEmpty(playerDto.Achievements);
+        Assert.Equal(2, playerDto.Achievements.Count);
+
+        var actualHighScore = playerDto.Achievements.First();
+        Assert.Equal(actualHighScore.Id, 1);
+        Assert.Equal(actualHighScore.Name, highScore.Name);
+        
+        var actualPb = playerDto.Achievements.Last();
+        Assert.Equal(actualPb.Id, 2);
+        Assert.Equal(actualPb.Name, personalBest.Name);
     }
+
+    private static Player CreatePlayerWithOneAchievement(Achievement added)
+        => new Player { Id = 2, Name = "Elvis" }.Add(added);
 }
