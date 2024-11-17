@@ -44,27 +44,18 @@ public class AchievementServiceTests : IDisposable
     [Fact]
     public void PostAnotherAchievement()
     {
-        var player = new Player{ Id = 2 };
-        var achievement1 = new Achievement { Id = 101 };
-        var achievement2 = new Achievement { Id = 102 };
+        var player = new Player{ Id = 2 , Achievement = new Achievement{ Id = 4 } };
+        var achievement = new Achievement { Id = 101 };
 
         dbContext.Setup(x => x.Get<Player>(player.Id)).Returns(player);
-        dbContext.Setup(x => x.Get<Achievement>(achievement1.Id)).Returns(achievement1);
-        dbContext.Setup(x => x.Get<Achievement>(achievement2.Id)).Returns(achievement2);
+        dbContext.Setup(x => x.Get<Achievement>(achievement.Id)).Returns(achievement);
         
-        var playerDto1 = service.PostAchievement(player.Id, achievement1.Id);
-        var playerDto2 = service.PostAchievement(player.Id, achievement2.Id);
+        var playerDto1 = service.PostAchievement(player.Id, achievement.Id);
 
         Validate.Begin()
             .IsNotNull(playerDto1, nameof(playerDto1)).Check()
             .GamerEquals(playerDto1, player.ToModel())
-            .AchievementEquals(playerDto1.Achievement, achievement1.ToModel())
-            .Check();
-
-        Validate.Begin()
-            .IsNotNull(playerDto2, nameof(playerDto2)).Check()
-            .GamerEquals(playerDto2, player.ToModel())
-            .AchievementEquals(playerDto2.Achievement, achievement2.ToModel())
+            .AchievementEquals(playerDto1.Achievement, achievement.ToModel())
             .Check();
     }
 }
