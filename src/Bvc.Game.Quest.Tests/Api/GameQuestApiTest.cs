@@ -52,6 +52,7 @@ public class GameQuestApiTest : IDisposable
         var requestDto1 = new PostAchievementRequest { GamerId = 0, AchievementId = 2 };
         
         var achievementDto = new AchievementDto { Id = requestDto.AchievementId, GamerId = requestDto.GamerId };
+        var achievementDto1 = new AchievementDto { Id = requestDto1.AchievementId, GamerId = requestDto1.GamerId };
         var returnedFromService = new GamerDto { Id = requestDto.GamerId, Achievement = achievementDto};
 
         service.Setup(x => x.PostAchievement(requestDto.GamerId, requestDto.AchievementId))
