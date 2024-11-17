@@ -48,6 +48,22 @@ public class GameQuestApiTest : IDisposable
     {
         //Arrange - create a Player who already has one achievement.
         //Act - call the Api - PostAchievement: same gamerId,  another AchievementId
+        var requestDto = new PostAchievementRequest { GamerId = 0, AchievementId = 0};
+        var requestDto1 = new PostAchievementRequest { GamerId = 0, AchievementId = 2 };
+        
+        var achievementDto = new AchievementDto { Id = requestDto.AchievementId, GamerId = requestDto.GamerId };
+        var returnedFromService = new GamerDto { Id = requestDto.GamerId, Achievement = achievementDto};
+
+        service.Setup(x => x.PostAchievement(requestDto.GamerId, requestDto.AchievementId))
+            .Returns(returnedFromService);
+        
+        var response = api.PostAchievement(requestDto);
+        
+        Validate.Begin()
+            .IsNotNull(response, nameof(response)).Check()
+            .IsEqual(response.Id, requestDto.AchievementId, nameof(response.Id))
+            .IsEqual(response.Achievement, achievementDto, nameof(response.Achievement))
+            .Check();
         //Assert
         //  make sure the "GamerDto" has both achievements
         
