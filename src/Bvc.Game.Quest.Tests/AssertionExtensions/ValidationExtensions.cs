@@ -10,13 +10,13 @@ public static class ValidationExtensions
         => v.IsNotNull(actual, nameof(actual)).Check()
             .IsNotNull(expected, nameof(expected)).Check()
             .IsEqual(actual.Id, expected.Id, nameof(actual.Id))
-            .AchievementEquals(actual.Achievement, expected.Achievement)
             .Check();
 
     public static Validation AchievementEquals(this Validation v, AchievementDto actual, AchievementDto expected)
         => v.IsNotNull(actual, nameof(actual)).Check()
             .IsNotNull(expected, nameof(expected)).Check()
             .IsEqual(actual.Id, expected.Id, nameof(actual.Id))
-            .IsEqual(actual.GamerId, expected.GamerId, nameof(actual.GamerId))
+            .IsEqual(actual.Id, expected.Id, nameof(actual.Id))
+            .IsEqual(actual.Name, expected.Name, nameof(actual.Name))
             .Check();
 }

@@ -10,13 +10,17 @@ public static class GamerMapperExtensions
         => new()
         {
             Id = player.Id,
-            Achievement = player.Achievement.ToModel()
+            Name = player.Name,
+            Achievements = player.Achievements.ToModels()
         };
 
-    public static AchievementDto ToModel(this Achievement achievement) =>
+    public static List<AchievementDto> ToModels(this IEnumerable<PlayerAchievement> achievements)
+        => achievements.Select(x => x.ToModel()).ToList();
+    
+    public static AchievementDto ToModel(this PlayerAchievement subject) =>
         new()
         {
-            Id = achievement.Id, 
-            GamerId = achievement.PlayerId
+            Id = subject.Id,
+            Name = subject.Achievement.Name
         };
 }

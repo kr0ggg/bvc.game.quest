@@ -28,8 +28,14 @@ public class GameQuestApiTest : IDisposable
     public void PostAchievement()
     {
         var requestDto = new PostAchievementRequest { GamerId = 0, AchievementId = 0 };
-        var achievementDto = new AchievementDto { Id = requestDto.AchievementId, GamerId = requestDto.GamerId };
-        var returnedFromService = new GamerDto { Id = requestDto.GamerId, Achievement = achievementDto};
+        
+        var achievementDto = new AchievementDto
+        { Id = requestDto.AchievementId, Name = "HighScore" };
+        
+        var returnedFromService = new GamerDto { Id = requestDto.GamerId, 
+            Name = "Kr0ggg",
+            Achievements = [achievementDto]
+        };
 
         service.Setup(x => x.PostAchievement(requestDto.GamerId, requestDto.AchievementId))
                .Returns(returnedFromService);
@@ -39,7 +45,9 @@ public class GameQuestApiTest : IDisposable
         Validate.Begin()
             .IsNotNull(response, nameof(response)).Check()
             .IsEqual(response.Id, requestDto.AchievementId, nameof(response.Id))
-            .IsEqual(response.Achievement, achievementDto, nameof(response.Achievement))
+            .IsNotEmpty(response.Achievements, nameof(response.Achievements))
+            .HasExactly(response.Achievements, 1, "has 1 achievement")
+            .Contains(response.Achievements, achievementDto, nameof(response.Achievements))
             .Check();
     }
 

@@ -18,7 +18,7 @@ public class AchievementService : IAchievementService
     {
         var player = dbContext.Get<Player>(playerId);
         var achievement = dbContext.Get<Achievement>(achievementId);
-        player.Achievement = achievement;
+        player.Add(achievement);
         return player.ToModel();
     }
 }
