@@ -6,7 +6,7 @@ namespace Bvc.Game.Quest.Services.Mappers;
 
 public static class GamerMapperExtensions
 {
-    public static GamerDto ToModel(this Player player, Player player1)
+    public static GamerDto ToModel(this Player player)
         => new()
         {
             Id = player.Id,

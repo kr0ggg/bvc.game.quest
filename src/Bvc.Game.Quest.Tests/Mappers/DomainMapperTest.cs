@@ -11,11 +11,13 @@ public class DomainMapperTest
     {
         var achievement = new Achievement { Id = 1, PlayerId = 2 };
         var player = new Player { Id = 2, Achievement = achievement };
-        var playerDto = player.ToModel(player);
+        var playerDto = player.ToModel();
+        var achievementDto = achievement.ToModel();
         
         
         Assert.NotNull(playerDto);
         Assert.Equal(playerDto.Id, player.Id);
+        Assert.Equal(achievementDto.Id, achievement.Id);
         
     }
 }
