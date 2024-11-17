@@ -14,10 +14,8 @@ public class DomainMapperTest
         var playerDto = player.ToModel();
         var achievementDto = achievement.ToModel();
         
-        
         Assert.NotNull(playerDto);
-        Assert.Equal(playerDto.Id, player.Id);
-        Assert.Equal(achievementDto.Id, achievement.Id);
-        
+        Assert.Equal(playerDto.PlayerName, player.Id);
+        Assert.Equal(achievementDto.AchievementName, achievement.Id);
     }
 }
