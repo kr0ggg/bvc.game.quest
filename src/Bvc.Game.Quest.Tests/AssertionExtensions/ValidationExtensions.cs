@@ -10,7 +10,7 @@ public static class ValidationExtensions
         => v.IsNotNull(actual, nameof(actual)).Check()
             .IsNotNull(expected, nameof(expected)).Check()
             .IsEqual(actual.Id, expected.Id, nameof(actual.Id))
-            .AchievementEquals(actual.Achievement, expected.Achievement)
+            .AchievementEquals(actual.Achievements, expected.Achievements)
             .Check();
 
     public static Validation AchievementEquals(this Validation v, AchievementDto actual, AchievementDto expected)

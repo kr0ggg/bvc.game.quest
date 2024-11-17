@@ -29,7 +29,10 @@ public class GameQuestApiTest : IDisposable
     {
         var requestDto = new PostAchievementRequest { GamerId = 0, AchievementId = 0 };
         var achievementDto = new AchievementDto { Id = requestDto.AchievementId, GamerId = requestDto.GamerId };
-        var returnedFromService = new GamerDto { Id = requestDto.GamerId, Achievement = achievementDto};
+        var returnedFromService = new GamerDto { Id = requestDto.GamerId, Achievements = new List<AchievementDto>
+        {
+            achievementDto
+        }};
 
         service.Setup(x => x.PostAchievement(requestDto.GamerId, requestDto.AchievementId))
                .Returns(returnedFromService);
@@ -39,7 +42,7 @@ public class GameQuestApiTest : IDisposable
         Validate.Begin()
             .IsNotNull(response, nameof(response)).Check()
             .IsEqual(response.Id, requestDto.AchievementId, nameof(response.Id))
-            .IsEqual(response.Achievement, achievementDto, nameof(response.Achievement))
+            .IsEqual(response.Achievements, achievementDto, nameof(response.Achievements))
             .Check();
     }
 
@@ -54,7 +57,7 @@ public class GameQuestApiTest : IDisposable
         var achievementDto = new AchievementDto { Id = requestDto.AchievementId, GamerId = requestDto.GamerId };
         var achievementDto1 = new AchievementDto { Id = requestDto1.AchievementId, GamerId = requestDto1.GamerId };
         var listOfAchievements = new List<AchievementDto> { achievementDto, achievementDto1 };
-        var returnedFromService = new GamerDto { Id = requestDto.GamerId, Achievement = listOfAchievements};
+        var returnedFromService = new GamerDto { Id = requestDto.GamerId, Achievements = listOfAchievements};
 
         service.Setup(x => x.PostAchievement(requestDto.GamerId, requestDto.AchievementId))
             .Returns(returnedFromService);
@@ -64,9 +67,9 @@ public class GameQuestApiTest : IDisposable
         Validate.Begin()
             .IsNotNull(response, nameof(response)).Check()
             .IsEqual(response.Id, requestDto.AchievementId, nameof(response.Id))
-            .IsEqual(response.Achievement, achievementDto, nameof(response.Achievement))
+            .IsEqual(response.Achievements, achievementDto, nameof(response.Achievements))
             .Check();
-        Assert.True(response.Achievement.Count()>2);
+        Assert.Equal(2, response.Achievements.Count());
         //Assert
         //  make sure the "GamerDto" has both achievements
         
