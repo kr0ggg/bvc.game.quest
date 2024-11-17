@@ -44,11 +44,27 @@ public class AchievementServiceTests : IDisposable
     [Fact]
     public void PostAnotherAchievement()
     {
-        //Arrange - create a Player who already has one achievement.
-        //Act - call the Api - PostAchievement: same gamerId,  another AchievementId
-        //Assert
-        //  make sure the "GamerDto" has both achievements
+        var player = new Player{ Id = 2 };
+        var achievement1 = new Achievement { Id = 101 };
+        var achievement2 = new Achievement { Id = 102 };
+
+        dbContext.Setup(x => x.Get<Player>(player.Id)).Returns(player);
+        dbContext.Setup(x => x.Get<Achievement>(achievement1.Id)).Returns(achievement1);
+        dbContext.Setup(x => x.Get<Achievement>(achievement2.Id)).Returns(achievement2);
         
-        // you will need to use Moq in order to "Setup" the call to the AchievementService.
+        var playerDto = service.PostAchievement(player.Id, achievement1.Id);
+        playerDto = service.PostAchievement(player.Id, achievement2.Id);
+
+        Validate.Begin()
+            .IsNotNull(playerDto, nameof(playerDto)).Check()
+            .GamerEquals(playerDto, player.ToModel())
+            .AchievementEquals(playerDto.Achievement, achievement1.ToModel())
+            .Check();
+
+        Validate.Begin()
+            .IsNotNull(playerDto, nameof(playerDto)).Check()
+            .GamerEquals(playerDto, player.ToModel())
+            .AchievementEquals(playerDto.Achievement, achievement2.ToModel())
+            .Check();
     }
 }
