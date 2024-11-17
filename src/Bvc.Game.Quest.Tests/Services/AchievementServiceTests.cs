@@ -52,19 +52,19 @@ public class AchievementServiceTests : IDisposable
         dbContext.Setup(x => x.Get<Achievement>(achievement1.Id)).Returns(achievement1);
         dbContext.Setup(x => x.Get<Achievement>(achievement2.Id)).Returns(achievement2);
         
-        var playerDto = service.PostAchievement(player.Id, achievement1.Id);
-        playerDto = service.PostAchievement(player.Id, achievement2.Id);
+        var playerDto1 = service.PostAchievement(player.Id, achievement1.Id);
+        var playerDto2 = service.PostAchievement(player.Id, achievement2.Id);
 
         Validate.Begin()
-            .IsNotNull(playerDto, nameof(playerDto)).Check()
-            .GamerEquals(playerDto, player.ToModel())
-            .AchievementEquals(playerDto.Achievement, achievement1.ToModel())
+            .IsNotNull(playerDto1, nameof(playerDto1)).Check()
+            .GamerEquals(playerDto1, player.ToModel())
+            .AchievementEquals(playerDto1.Achievement, achievement1.ToModel())
             .Check();
 
         Validate.Begin()
-            .IsNotNull(playerDto, nameof(playerDto)).Check()
-            .GamerEquals(playerDto, player.ToModel())
-            .AchievementEquals(playerDto.Achievement, achievement2.ToModel())
+            .IsNotNull(playerDto2, nameof(playerDto2)).Check()
+            .GamerEquals(playerDto2, player.ToModel())
+            .AchievementEquals(playerDto2.Achievement, achievement2.ToModel())
             .Check();
     }
 }
