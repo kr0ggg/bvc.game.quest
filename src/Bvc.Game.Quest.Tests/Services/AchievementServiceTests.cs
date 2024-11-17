@@ -40,7 +40,6 @@ public class AchievementServiceTests : IDisposable
             .AchievementEquals(playerDto.Achievement, achievement.ToModel())
             .Check();
     }
-   
 
     [Fact]
     public void PostAnotherAchievement()

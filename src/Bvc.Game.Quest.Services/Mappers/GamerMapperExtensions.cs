@@ -14,5 +14,9 @@ public static class GamerMapperExtensions
         };
 
     public static AchievementDto ToModel(this Achievement achievement) =>
-        new() { Id = achievement.Id, GamerId = achievement.PlayerId };
+        new()
+        {
+            Id = achievement.Id, 
+            GamerId = achievement.PlayerId
+        };
 }
