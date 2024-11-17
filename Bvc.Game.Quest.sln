@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bvc.Game.Quest.Services", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bvc.Game.Quest.Tests", "src\Bvc.Game.Quest.Tests\Bvc.Game.Quest.Tests.csproj", "{8E8F6B36-C475-4FC9-9EFE-C849161247AB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bvc.Game.Quest.Api", "src\Bvc.Game.Quest.Api\Bvc.Game.Quest.Api.csproj", "{9819D848-442C-41DB-A1F9-D81BE43696B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{8E8F6B36-C475-4FC9-9EFE-C849161247AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E8F6B36-C475-4FC9-9EFE-C849161247AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E8F6B36-C475-4FC9-9EFE-C849161247AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9819D848-442C-41DB-A1F9-D81BE43696B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9819D848-442C-41DB-A1F9-D81BE43696B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9819D848-442C-41DB-A1F9-D81BE43696B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9819D848-442C-41DB-A1F9-D81BE43696B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
