@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - 'GQ-**'
+      - 'gq-**'
   pull_request:
     branches:
       - main
