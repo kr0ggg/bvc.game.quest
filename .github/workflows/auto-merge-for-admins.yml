@@ -34,8 +34,7 @@ jobs:
   auto-merge:
     needs: [build, test]
     runs-on: ubuntu-latest
-    if: |
-      contains(fromJson(secrets.AUTHORIZED_USERS), github.actor)
+    if: contains(fromJson(${{secrets.AUTHORIZED_USERS}}), github.actor)
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
