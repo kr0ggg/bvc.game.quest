@@ -1,0 +1,45 @@
+name: .NET 8 CI/CD with Auto Merge
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+      - name: Test
+        run: dotnet test --configuration Release --no-build --verbosity normal
+
+  auto-merge:
+    needs: build
+    runs-on: ubuntu-latest
+    if: |
+      contains(fromJson(secrets.AUTHORIZED_USERS), github.actor)
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Auto-merge pull request
+        run: |
+          gh pr merge --auto --merge "${{ github.event.pull_request.number }}" && \
+          gh pr close "${{ github.event.pull_request.number }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Delete branch
+        run: |
+          gh pr view "${{ github.event.pull_request.number }}" --json headRefName --jq .headRefName | \
+          xargs -I {} gh api repos/${{ github.repository }}/git/refs/heads/{} -X DELETE
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
