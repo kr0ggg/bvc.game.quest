@@ -55,11 +55,28 @@ public class GameQuestApiTest : IDisposable
     [Fact]
     public void PostAnotherAchievement()
     {
-        //Arrange - create a Player who already has one achievement.
-        //Act - call the Api - PostAchievement: same gamerId,  another AchievementId
-        //Assert
-        //  make sure the "GamerDto" has both achievements
+        var requestDto = new PostAchievementRequest { GamerId = 1, AchievementId = 2 }; 
         
-        // you will need to use Moq in order to "Setup" the call to the AchievementService.
+        var firstAchievement = new AchievementDto { Id = 1, Name = "HighScore" };
+        var secondAchievement = new AchievementDto { Id = requestDto.AchievementId, Name = "SecondHighScore" };
+        
+        var returnedFromService = new GamerDto {
+            Id = requestDto.GamerId,
+            Name = "Kr0ggg",
+            Achievements = [firstAchievement, secondAchievement]
+        };
+
+        service.Setup(x => x.PostAchievement(requestDto.GamerId, requestDto.AchievementId))
+            .Returns(returnedFromService);
+        
+        var response = api.PostAchievement(requestDto);
+        
+        Validate.Begin()
+            .IsNotNull(response, nameof(response)).Check()
+            .IsNotEmpty(response.Achievements, nameof(response.Achievements))
+            .HasExactly(response.Achievements, 2, "has 2 achievements")
+            .Contains(response.Achievements, firstAchievement, nameof(response.Achievements))
+            .Contains(response.Achievements, secondAchievement, nameof(response.Achievements))
+            .Check();
     }
 }
